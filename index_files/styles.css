@@ -1,0 +1,121 @@
+/**
+ * Prestashop Security Booster
+ *
+ * @version   1.X
+ * @author    liewebs - http://www.liewebs.com
+ * @copyright Copyright (C) 2016 liewebs. All rights reserved.
+ * @license   GNU General Public License version 2
+*/
+
+/*spoiler in configuration page*/
+.clickable
+{
+    cursor: pointer;
+}
+.panel-heading-spoiler {
+	background-color: transparent;		
+}
+.panel-heading-spoiler, .panel-primary-spoiler{
+    border: none !important;
+    box-shadow: none !important;
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+
+/* scroll.tpl css style */
+
+div#sidebar_security.panel {
+z-index: 9999;
+position: fixed !important;
+width: 250px;
+right: 0;
+top: 100px;
+-webkit-box-shadow: 0px 9px 8px 3px rgba(250,118,118,0.87);
+-moz-box-shadow: 0px 9px 8px 3px rgba(250,118,118,0.87);
+box-shadow: 0px 9px 8px 3px rgba(250,118,118,0.87);
+}
+
+/*textarea helperform*/
+.textarea-securitybooster {
+    resize: both !important;
+    height: 350px !important;
+    overflow: scroll !important;
+}
+/*Quick top*/
+.bootstrap #securitybooster_top { margin-bottom: 0; padding-left: 0; list-style: none; }
+
+.bootstrap #securitybooster_top:before, .bootstrap #securitybooster_top:after { content: " "; display: table; }
+
+.bootstrap #securitybooster_top:after { clear: both; }
+
+.bootstrap #securitybooster_top > li { position: relative; display: block; }
+
+.bootstrap #securitybooster_top > li > a { position: relative; display: block; padding: 10px 15px; }
+
+.bootstrap #securitybooster_top > li > a:hover, .bootstrap #securitybooster_top > li > a:focus { text-decoration: none; background-color: #eeeeee; }
+
+.bootstrap #securitybooster_top > li.disabled > a { color: #999999; }
+
+.bootstrap #securitybooster_top > li.disabled > a:hover, .bootstrap #securitybooster_top > li.disabled > a:focus { color: #999999; text-decoration: none; background-color: transparent; cursor: not-allowed; }
+
+.bootstrap #securitybooster_top .open > a, .bootstrap #securitybooster_top .open > a:hover, .bootstrap #securitybooster_top .open > a:focus { background-color: #eeeeee; border-color: #00aff0; }
+
+.bootstrap #securitybooster_top .nav-divider { height: 1px; margin: 7.5px 0; overflow: hidden; background-color: #e5e5e5; }
+
+.bootstrap #securitybooster_top > li > a > img { max-width: none; }
+
+
+.bootstrap #securitybooster_top > li > a { padding-top: 10px; padding-bottom: 10px; line-height: 17px; }
+
+.bootstrap #securitybooster_top > li > .dropdown-menu { margin-top: 0; border-top-right-radius: 0; border-top-left-radius: 0; width:100%; }
+
+.bootstrap .navbar-fixed-bottom #securitybooster_top > li > .dropdown-menu { border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+
+.bootstrap .navbar-default #securitybooster_top > li > a { color: #777777; }
+
+.bootstrap .navbar-default #securitybooster_top > li > a:hover, .bootstrap .navbar-default #securitybooster_top > li > a:focus { color: #333333; background-color: transparent; }
+
+.bootstrap .navbar-default #securitybooster_top > .active > a, .bootstrap .navbar-default #securitybooster_top > .active > a:hover, .bootstrap .navbar-default .navbar-nav > .active > a:focus, .bootstrap .navbar-default #securitybooster_top > .active > a:focus { color: #555555; background-color: #e7e7e7; }
+
+.bootstrap .navbar-default #securitybooster_top > .disabled > a, .bootstrap .navbar-default #securitybooster_top > .disabled > a:hover, .bootstrap .navbar-default #securitybooster_top > .disabled > a:focus { color: #cccccc; background-color: transparent; }
+
+.bootstrap .navbar-default #securitybooster_top > .open > a, .bootstrap .navbar-default #securitybooster_top > .open > a:hover, .bootstrap .navbar-default #securitybooster_top > .open > a:focus { background-color: #e7e7e7; color: #555555; }
+
+.bootstrap .navbar-inverse #securitybooster_top > li > a, .bootstrap #header_infos #securitybooster_top > li > a { color: #999999; }
+
+.bootstrap .navbar-inverse #securitybooster_top > li > a:hover, .bootstrap #header_infos #securitybooster_top > li > a:hover, .bootstrap .navbar-inverse #securitybooster_top > li > a:focus, .bootstrap #header_infos #securitybooster_top > li > a:focus { color: white; background-color: transparent; }
+
+.bootstrap .navbar-inverse #securitybooster_top > .active > a, .bootstrap #header_infos #securitybooster_top > .active > a, .bootstrap .navbar-inverse #securitybooster_top > .active > a:hover, .bootstrap #header_infos #securitybooster_top > .active > a:hover, .bootstrap .navbar-inverse #securitybooster_top > .active > a:focus, .bootstrap #header_infos #securitybooster_top > .active > a:focus { color: white; background-color: #090909; }
+
+.bootstrap .navbar-inverse #securitybooster_top > .disabled > a, .bootstrap #header_infos #securitybooster_top > .disabled > a, .bootstrap .navbar-inverse #securitybooster_top > .disabled > a:hover, .bootstrap #header_infos #securitybooster_top > .disabled > a:hover, .bootstrap .navbar-inverse #securitybooster_top > .disabled > a:focus, .bootstrap #header_infos #securitybooster_top > .disabled > a:focus { color: #444444; background-color: transparent; }
+
+.bootstrap .navbar-inverse #securitybooster_top > .open > a, .bootstrap #header_infos #securitybooster_top > .open > a, .bootstrap .navbar-inverse #securitybooster_top > .open > a:hover, .bootstrap #header_infos #securitybooster_top > .open > a:hover, .bootstrap .navbar-inverse #securitybooster_top > .open > a:focus, .bootstrap #header_infos #securitybooster_top > .open > a:focus { background-color: #090909; color: white; }
+
+.bootstrap #securitybooster_top { float: left; margin: 8.5px 0px; text-decoration: none;}
+
+.bootstrap #securitybooster_top > li { float: left; }
+
+.bootstrap #securitybooster_top > li > a { padding-top: 9px; padding-bottom: 9px; }
+
+.bootstrap .navbar-right#securitybooster_top:last-child { margin-right: -5px; }
+
+/*  For responsive images */
+
+
+@media (max-width: 1024px) {
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (max-width: 480px) {
+
+}
+
+@media (max-width: 360px) {
+
+}
+

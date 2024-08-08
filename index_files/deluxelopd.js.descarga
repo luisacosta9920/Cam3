@@ -1,0 +1,838 @@
+/**
+ * 2007-2018 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * @author    Innovadeluxe SL
+ * @copyright 2016 Innovadeluxe SL
+
+ * @license   INNOVADELUXE
+ */
+
+
+var versionPS = "";
+
+var waitForEl = function(selector, callback) {
+  if (jQuery(selector).length) {
+    callback();
+  } else {
+    setTimeout(function() {
+      waitForEl(selector, callback);
+    }, 100);
+  }
+};
+
+$(document).ready(function() {
+    //esto por si el newsletter o el optin ya está seleccionado por defecto
+    waitForEl('#newsletter:visible, #optin:visible', function() {
+        if ($('#optin').is(':checked') || $('#newsletter').is(':checked')) {
+            $('#idxjslopd-check-regnewsletter-wrapper').show();
+        }
+    });
+    
+    if(show_lopd_alert) {
+        if(window.location.href !== $('#alert_lopd_url').attr('href')) {
+            $('#deluxelopdAlert').parent().fadeIn("slow");
+        }
+    }
+    
+    //Si no está el botón de pedido como invitado (no se permite pedido como invitado)
+    // y además existe el botón de crear cuenta (estamos en el pedido en una página)
+    // y se confirma que no se permite pedir como invitado (valor de la variable de configuración de prestashop)
+    if(!$('#opc_guestCheckout').length && $('#opc_createAccount').length && !parseInt(guestCheckoutEnabled)) {
+        $('#opc_createAccount').click();
+    }
+    
+    if(acceptBycheckBox) {
+        if(inNewsletter) {
+            var checkprivacyNewsletter = "";
+            checkprivacyNewsletter += '<div class="checkbox idxjslopd-check-newsletter">';
+            checkprivacyNewsletter += '<label class="form-check-label">';
+            checkprivacyNewsletter += '<input type="checkbox" id="acceptLopdNewsletter" name="acceptLopd" class="form-check-input"/>';
+            checkprivacyNewsletter += decodeURIComponent(privacyUrlText1).replace(/\+/g, " ")+' <a class="idxjs-aprivacy-newsletter" href="'+privacyUrlNews+'" target="_blank" rel="nofollow">' + decodeURIComponent(privacyUrlText2).replace(/\+/g, " ") + '</a><i class="reg-red">*</i></label>';
+            checkprivacyNewsletter += '</br>';
+            checkprivacyNewsletter += '<span class="lopd-check-error-newsletter" style="display:none">' + decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " ") + '.</span>';
+            checkprivacyNewsletter += '</div>';
+            checkprivacyNewsletter += '<div class="min-text-newsletter">'+decodeURIComponent(privacyItNews).replace(/\+/g, " ")+'</div>';
+            $('[name=submitNewsletter]:visible').after(checkprivacyNewsletter);
+        }
+        
+        var checkprivacy = "";
+        checkprivacy += '<div id="lopdParentCheck"class="checkbox">';
+        checkprivacy += '<label class="form-check-label">';
+        checkprivacy += '<input type="checkbox" id="acceptLopd" name="acceptLopd" class="form-check-input"/>';
+        checkprivacy += decodeURIComponent(privacyUrlText1).replace(/\+/g, " ")+' <a class="idxjs-aprivacy" rel="nofollow" href="';
+        if(inContact) {
+            checkprivacy += privacyUrlContact+'" target="_blank">' + decodeURIComponent(privacyUrlText2).replace(/\+/g, " ") + '</a><i class="reg-red">*</i></label>';
+        }
+        if(inRegister) {
+            checkprivacy += privacyUrl+'" target="_blank">' + decodeURIComponent(privacyUrlText2).replace(/\+/g, " ") + '</a><i class="reg-red">*</i></label>';
+        }
+        if(inRefunds) {
+            checkprivacy += privacyUrlRefunds+'" target="_blank">' + decodeURIComponent(privacyUrlText2).replace(/\+/g, " ") + '</a><i class="reg-red">*</i></label>';
+        }
+        if(inProdAlert) {
+            checkprivacy += privacyUrlProduct+'" target="_blank">' + decodeURIComponent(privacyUrlText2).replace(/\+/g, " ") + '</a><i class="reg-red">*</i></label>';
+        }
+        checkprivacy += '</br>';
+        checkprivacy += '<span class="lopd-check-error" style="display:none">' + decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " ") + '.</span>';
+        checkprivacy += '</div>';
+        if(inContact) {
+            checkprivacy += '<div class="min-text-contact">'+decodeURIComponent(privacyItContact).replace(/\+/g, " ")+'</div>';
+        }
+        if(inRegister) {
+            checkprivacy += '<div class="min-text-register">'+decodeURIComponent(privacyItRegister).replace(/\+/g, " ")+'</div>';
+        }
+        if(inProdAlert) {
+            checkprivacy += '<div class="min-text-product">'+decodeURIComponent(privacyItProduct).replace(/\+/g, " ")+'</div>';
+        }
+        if(inRefunds) {
+            checkprivacy += '<div class="min-text-product">'+decodeURIComponent(privacyItRefunds).replace(/\+/g, " ")+'</div>';
+        }
+        
+        if(inContact) {
+            $('#submitMessage').after(checkprivacy);
+        }
+        
+        //*****
+        if(inRegister) {
+            $('#SubmitCreate').after(checkprivacy);
+            var buttonCreate = $('#customer-form').find('.form-control-submit');
+            buttonCreate.before(checkprivacy);
+            var buttonCreateEx = $('#customer-form').find('[name="continue"]');
+            buttonCreateEx.before(checkprivacy);
+        }
+        if(inOpc) {
+            var checkprivacyExpress = "";
+            checkprivacyExpress += '<div id="lopdParentCheckExpress"class="checkbox">';
+            checkprivacyExpress += '<div class="checkbox idxjslopd-check-express">';
+            checkprivacyExpress += '<label class="form-check-label">';
+            checkprivacyExpress += '<input type="checkbox" id="acceptLopdExpress" name="acceptLopdExpress" class="form-check-input"/>';
+            checkprivacyExpress += decodeURIComponent(privacyUrlText1).replace(/\+/g, " ")+' <a class="idxjs-aprivacy-express" href="'+privacyUrlExpress+'" target="_blank" rel="nofollow">' + decodeURIComponent(privacyUrlText2).replace(/\+/g, " ") + '</a><i class="reg-red">*</i></label>';
+            checkprivacyExpress += '</br>';
+            checkprivacyExpress += '<span class="lopd-check-error-express" style="display:none">' + decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " ") + '.</span>';
+            checkprivacyExpress += '</div>';
+            checkprivacyExpress += '<div class="min-text-express">'+decodeURIComponent(privacyItExpress).replace(/\+/g, " ")+'</div>';
+            $('#submitGuestAccount').after(checkprivacyExpress);
+            if(parseInt(guestCheckoutEnabled)) {
+                if($('#opc_guestCheckout').is(":visible")) {
+                    $(document).on('click', '#opc_guestCheckout', function(){
+                        setTimeout(function(){
+                            $('#submitAccountDeluxe').after(checkprivacyExpress);
+                        }, 1000);
+                    });
+                } else {
+                    setTimeout(function(){
+                        $('#submitAccountDeluxe').after(checkprivacyExpress);
+                    }, 1000);
+                }
+                if($('#opc_createAccount').is(":visible")) {
+                    $(document).on('click', '#opc_createAccount', function(){
+                        setTimeout(function(){
+                            $('#submitAccountDeluxe').after(checkprivacyExpress);
+                        }, 1000);
+                    });
+                } else {
+                    setTimeout(function(){
+                        $('#submitAccountDeluxe').after(checkprivacyExpress);
+                    }, 1000);
+                }
+            } else {
+                 setTimeout(function () {
+                    $('#submitAccountDeluxe').after(checkprivacyExpress);
+                }, 1000);
+            }
+            
+        }
+        
+        //*****
+        if(inRefunds) {
+            $('#submitRefundNL').after(checkprivacy);
+        }
+        if(inProdAlert) {
+            waitForEl('#oos_customer_email_result:visible', function() {
+                if($("#oos_customer_email_result").is(":visible") && $("#oos_customer_email_result").text().length > 0) {
+                    return;
+                } else {
+                    if($("#mailalert_link").is(":visible")) {
+                        $('#mailalert_link').after(checkprivacy);
+                        $('#oos_customer_email').attr('id','oos_customer_email_nolopd');
+                    }
+                }
+            });
+        }
+    } else {
+        if(inProdAlert) {
+            $('#oos_customer_email').attr('id','oos_customer_email_nolopd');
+        }
+    }
+    
+    //Compatibilidad con otros módulos
+    if(!('#fakeOrder').lenght) {
+        //No se ejecutará en el document ready solo si es onepagechecheckout
+        makeButtonCompatible();
+    }
+  
+    if ($('#optin').is(':checked') || $('#newsletter').is(':checked')) {
+        $('#idxjslopd-check-regnewsletter-wrapper').show();
+    }
+});
+
+//Ejecución de compatibilidad si hay recargas de la página por ajax
+$( document ).ajaxStop(function() {
+  makeButtonCompatible(true);
+});
+
+function makeButtonCompatible(ajax) {
+    if(typeof cButtons != 'undefined' && cButtons) {
+        if (!($.isArray(cButtons))) {
+            var JSONcButtons = JSON.parse(cButtons);
+            eachElements(JSONcButtons, acceptBycheckBox, ajax);
+        } else {
+            eachElements(cButtons, acceptBycheckBox, ajax);
+        } 
+    }
+}
+
+//Compatibilidad con módulo de alertas de precios pricewatch de bestkit
+$(document).ready(function(){
+
+    $('.pricewatch-start-button').attr('id','pricewatch-start-button');
+    $(document).on('click', '#pricewatch-start-button', acceptLopdPrice);
+    function acceptLopdPrice() {
+        bestkit_pricewatch.subscribe();
+        $.fancybox.close();
+        return false;
+    }
+    
+    
+});
+
+function eachElements(elements, checkbox, ajax) {
+        var i= 0;
+        elements.forEach(function(element) {
+            var name = '';
+            var contwait=0;
+            var before = false;
+            //by id wait
+            if(!element.swap || ajax) {
+                waitForEl('#'+element.id_button+':visible', function() {
+                    if($('#'+element.id_button+':visible').attr('name')) {
+                        name = $('#'+element.id_button+':visible').attr('name');
+                    } else {
+                        name = element.id_button;
+                        element.name = name;
+                        $('#'+element.id_button+':visible').attr('name', name);
+                    }
+                    //Esto para compatibilidad con chat helpedesk (mostrar arriba del botón)
+                    if(name == 'lz_chat_overlay_data_form_ok_button') {
+                        before = true;
+                    }
+                    doButtonSwap(element, checkbox, i, before);
+                    contwait++;
+                });
+                //by name wait
+                waitForEl('[name="'+element.name +'"]:visible', function() {
+                        if(!contwait) {
+                            name = element.name;
+                            //Esto para compatibilidad con chat helpedesk (mostrar arriba del botón)
+                            if(name == 'lz_chat_overlay_data_form_ok_button') {
+                                before = true;
+                            }
+                            doButtonSwap(element, checkbox, i, before);
+                        }
+                });
+            }
+           i++;
+        });
+    }
+
+function doButtonSwap (element , checkbox, i, before) {
+    element.swap = true;
+    var name = element.name;
+    var checkprivacyCompatible = "";
+        checkprivacyCompatible += '<div id="lopdParentCheckCompatible"class="checkbox">';
+        checkprivacyCompatible += '<div class="checkbox idxjslopd-check-compatible">';
+        checkprivacyCompatible += '<label class="form-check-label">';
+        checkprivacyCompatible += '<input type="checkbox" id="acceptLopdCompatible" name="acceptLopdCompatible" class="form-check-input isCompatible-'+name+'"/>';
+        checkprivacyCompatible += decodeURIComponent(privacyUrlText1).replace(/\+/g, " ")+' <a class="idxjs-aprivacy-compatible" href="'+element.privacyUrlCompatible+'" target="_blank" rel="nofollow">' + decodeURIComponent(privacyUrlText2).replace(/\+/g, " ") + '</a><i class="reg-red">*</i></label>';
+        checkprivacyCompatible += '</br>';
+        checkprivacyCompatible += '<span class="lopd-check-error-compatible isCompatible-'+name+'" style="display:none">' + decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " ") + '.</span>';
+        checkprivacyCompatible += '</div>';
+        checkprivacyCompatible += '<div class="min-text-compatible isCompatible-'+name+'">'+decodeURIComponent(element.privacyItCompatible).replace(/\+/g, " ")+'</div>';
+        if($('[name="'+element.name +'"]:visible').length && checkbox) {
+            if(before) {
+                $('[name="'+name +'"]:visible').before(checkprivacyCompatible);
+            } else {
+                $('[name="'+name +'"]:visible').after(checkprivacyCompatible);
+            }
+        }
+        var origCssClasses = $('[name="'+name +'"]:visible').attr('class');
+        var origInlineStyle = $('[name="'+name +'"]:visible').attr('style');
+        //Si es un botón
+        if($('[name="'+name +'"]:visible').is("button")) {
+            $('[name="'+name +'"]:visible').after('<button id="deluxeCompatibleLopdButton_'+ i +'" name="'+ name +'Deluxe'+'" class="'+ origCssClasses +'" ><span>'+$('[name="'+name +'"]').text()+'</span></button>');
+        } else if($('[name="'+name +'"]:visible').is("input")) {
+        //Si es un input
+            $('[name="'+name +'"]:visible').after('<input type="button" id="deluxeCompatibleLopdButton_'+ i +'" name="'+ name +'Deluxe'+'" class="'+ origCssClasses +'" value="'+ $('[name="'+name +'"]').val() +'"/>');
+        } else if($('[name="'+name +'"]:visible').is("a")) {
+        //Si es un a
+            $('[name="'+name +'"]:visible').after('<a id="deluxeCompatibleLopdButton_'+ i +'" name="'+ name +'Deluxe'+'" class="'+ origCssClasses +'" rel="nofollow">'+$('[name="'+name +'"]').text()+'</a>');
+        } else if($('[name="'+name +'"]:visible').is("div")) {
+        //Si es un div
+            $('[name="'+name +'"]:visible').after('<div id="deluxeCompatibleLopdButton_'+ i +'" name="'+ name +'Deluxe'+'" class="'+ origCssClasses +'" style="'+ origInlineStyle +'" >'+$('[name="'+name +'"]').text()+'</div>');
+        }
+        
+         //ocultar el botón principal
+        $('[name="'+name +'"]').hide();
+        
+        //onepagecheckout
+        makepixelfrombutton('fakeOrder');
+    
+        $(document).on("click","[name='"+name+"Deluxe']",function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#deluxelopdCompatible').attr('origname', name);
+            var putHtmlText = decodeURIComponent(element.privacyItCompatible).replace(/\+/g, " ");
+            $('#deluxelopdCompatible .min-text-compatible').empty().append(putHtmlText);
+            $('#deluxelopdCompatible .lopd-link a').attr('href', decodeURIComponent(element.privacyUrlCompatible));
+            $("[name='"+name+"Deluxe']").mostrarLOPD($('#deluxelopdCompatible'));
+       });
+} 
+
+//onepagecheckout
+
+function makepixelfrombutton(id) {
+    //onepagecheckout
+        $('#'+id).text('');
+        $('#'+id).css('width','0px');
+        $('#'+id).css('height','0px');
+        $('#'+id).css('padding','0px');
+        $('#'+id).css('margin','0px');
+        $('#'+id).css('background-color','transparent');
+}
+
+(function($) {
+  $.fn.mostrarLOPD = function(divAMostrar) {
+    $('.lopd-check-error').hide();
+    $('.lopd-check-error-newsletter').hide();
+    $('.lopd-check-error-express').hide();
+    if(acceptBycheckBox) { //variable que determian si se utiliza un checkbox
+        if($(divAMostrar).attr('id') == 'deluxelopdNewsletter') {
+            if ($('#acceptLopdNewsletter').is(':checked') == false) {
+                $('.lopd-check-error-newsletter').show();
+            } else {
+                acceptNewsLetter();
+            }
+        } else if($(divAMostrar).attr('registertype') == 'express' || $(divAMostrar).attr('id') == 'deluxelopdOrderOPC') {
+            var stopbynewsletter = false;
+            if (inNewsletter) {
+                if ($('#optin').is(':checked') || $('#newsletter').is(':checked')) {
+                    if ($('#acceptLopdRegNewsletter').is(':checked')) {
+                        email = $('#email').val();
+                        logLopdAccept(email, 'newsletter');
+                    } else {
+                        alert(decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " "));
+                        var stopbynewsletter = true;
+                    }
+                }
+            }
+            if(!stopbynewsletter) {
+                if ($('#acceptLopdExpress').is(':checked') == false) {
+                    $('.lopd-check-error-express').show();
+                } else {
+                    acceptLopdAuthenticationExpress();
+                }
+            }
+        } else if($(divAMostrar).attr('id') == 'deluxelopdCompatible') {
+            var nameOrig = $('#deluxelopdCompatible').attr('origname');
+            if ($('#acceptLopdCompatible.isCompatible-'+nameOrig+'').is(':checked') == false) {
+                $('.lopd-check-error-compatible.isCompatible-'+nameOrig+'').show();
+            } else {
+                acceptLopdCompatible();
+            }
+        } else {
+            if ($('#acceptLopd').is(':checked') == false) {
+                $('.lopd-check-error').show();
+            } else {
+                if($(divAMostrar).attr('id') == 'deluxelopdContact') {
+                    acceptLopdContact();
+                } else if($(divAMostrar).attr('id') == 'deluxelopdAuthentication') {
+                    acceptLopdAuthentication();
+                } else if($(divAMostrar).attr('id') == 'deluxelopdProductAlert') {
+                    $('#lopdParentCheck').hide();
+                    $('.min-text-product').hide();                    
+                    acceptProductAlert();
+                } else if($(divAMostrar).attr('id') == 'deluxelopdRefunds') {
+                    acceptLopdRefunds();
+                }
+            }
+        }
+    } else {
+        var stopbynewsletter = false;
+        if (inNewsletter) {
+            if ($('#optin').is(':checked') || $('#newsletter').is(':checked')) {
+                if ($('#acceptLopdRegNewsletter').is(':checked')) {
+                    email = $('#email').val();
+                    logLopdAccept(email, 'newsletter');
+                } else {
+                    alert(decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " "));
+                    var stopbynewsletter = true;
+                }
+            }
+        }
+        if(!stopbynewsletter) {
+            $(divAMostrar).fadeIn("slow");
+        }
+    }
+  };
+})(jQuery);
+
+(function($) {
+  $.fn.aceptarLOPD = function(divAOcultar) {
+    $(divAOcultar).fadeOut("slow");
+    $(this).submit();
+  };
+})(jQuery);
+
+function initVersion(version) {
+  versionPS = version;
+}
+
+function executeLOPD() {
+  $(document).ready(function() {
+      $('#SubmitCreate').mostrarLOPD($('#deluxelopdAuthentication'));
+      $('#submitMessage').mostrarLOPD($('#deluxelopdContact'));
+      $('[name=submitNewsletter]:visible').mostrarLOPD($('#deluxelopdNewsletter'));
+  })
+}
+
+function acceptNewsLetter() {
+    var $formLetter;
+    $('[name=submitNewsletter]:visible').prepend('<input type="hidden" name="submitNewsletter">');
+    $formLetter = $('[name=submitNewsletter]:visible').closest('form');
+    if($('#captchaNewsletter').length) {
+        if (grecaptcha.getResponse(captchaNewsletter) == "") {
+            if(!$('#acceptLopdNewsletter').length) {
+                //Si es una modal
+                $('.captchaerror').show();
+            } else {
+                alert(fillCaptchaText);
+            }
+        } else {
+            email = $('#newsletter-input').val();
+            logLopdAccept(email, 'newsletter');
+            $($formLetter).aceptarLOPD($("#deluxelopdNewsletter"));
+        }
+    } else {
+        email = $('#newsletter-input').val();
+        logLopdAccept(email, 'newsletter');
+        //Si no existe el módulo de captcha, se continúa normalmente
+        $($formLetter).aceptarLOPD($("#deluxelopdNewsletter"));
+    }
+}
+
+function acceptLopdRefunds(is_logged) {
+  if(is_logged){
+    $("#selectFormProducts").aceptarLOPD($('#deluxelopdRefunds'));
+  }else{
+    $("#selectFormOrderNL").aceptarLOPD("#deluxelopdRefunds");    
+  }
+}
+
+function acceptLopdAuthentication() {
+
+    if ($('#captchaRegister').length) {
+        //Si hay captcha
+        var captchaElement; // si no es el newsletter debe ser nulo
+        if ($('#captchaNewsletter').length) {
+            //Si hay captcha de newsletter 
+            captchaElement = captchaRegister;
+        }
+        if (grecaptcha.getResponse(captchaElement) == "") {
+            if (!$('#acceptLopd').length) {
+                //Si es una modal
+                $('.captchaerror').show();
+            } else {
+                alert(fillCaptchaText);
+            }
+        } else {
+            email = $('#email_create').val();
+            logLopdAccept(email, 'authentication');
+            $("#create-account_form").aceptarLOPD($('#deluxelopdAuthentication'));
+        }
+    } else {
+        email = $('#email_create').val();
+        logLopdAccept(email, 'authentication');
+        $("#create-account_form").aceptarLOPD($('#deluxelopdAuthentication'));
+    }
+}
+
+function acceptLopdAuthenticationExpress() {
+    if ($('#captchaRegister').length) {
+        //Si hay captcha
+        var captchaElement; // si no es el newsletter debe ser nulo
+        if ($('#captchaNewsletter').length) {
+            //Si hay captcha de newsletter 
+            captchaElement = captchaRegister;
+        }
+        if (grecaptcha.getResponse(captchaElement) == "") {
+            if (!$('#acceptLopd').length) {
+                //Si es una modal
+                $('.captchaerror').show();
+            } else {
+                alert(fillCaptchaText);
+            }
+        } else {
+            email = $('#email').val();
+            logLopdAccept(email, 'authentication');
+            $("#new_account_form").append('<input type="hidden" name="submitGuestAccount">');
+            if (acceptBycheckBox) {
+                //$("#new_account_form").submit();
+                expressOriginalEventClickButton();
+            } else {
+                $('#deluxelopdOrderOPC').fadeOut("slow");
+                expressOriginalEventClickButton();
+                //$("#new_account_form").aceptarLOPD($('#deluxelopdAuthentication'));
+            }
+        }
+    } else {
+        email = $('#email').val();
+        logLopdAccept(email, 'authentication');
+        $("#new_account_form").append('<input type="hidden" name="submitGuestAccount">');
+        if (acceptBycheckBox) {
+            //$("#new_account_form").submit();
+            expressOriginalEventClickButton();
+        } else {
+            $('#deluxelopdOrderOPC').fadeOut("slow");
+            expressOriginalEventClickButton();
+            //$("#new_account_form").aceptarLOPD($('#deluxelopdAuthentication'));
+        }
+    }
+}
+
+function acceptLopdAuthenticationV15() {
+    email = $('#email_create').val();
+    logLopdAccept(email, 'authentication');
+    $("#create-account_form").aceptarLOPD($('#deluxelopdAuthentication'));
+}
+
+function acceptLopdContact() {
+    if($('#captchaContact').length) {
+        //Si hay captcha
+        var captchaElement; // si no es el newsletter debe ser nulo
+        if($('#captchaNewsletter').length) {
+        //Si hay captcha de newsletter 
+            captchaElement = captchaContact;
+        }
+        if (grecaptcha.getResponse(captchaElement) == "") {
+            if(!$('#acceptLopd').length) {
+            //Si es una modal
+                $('.captchaerror').show();
+            } else {
+                alert(fillCaptchaText);
+            }
+        } else {
+            $('[name=submitMessage]:visible').prepend('<input type="hidden" name="submitMessage">');
+            $formLetter = $("[name=submitMessage]:visible").closest('form');
+            email = $('#email').val();
+            logLopdAccept(email, 'contact');
+            $formLetter.aceptarLOPD($('#deluxelopdContact'));
+        }
+    } else {
+        $('[name=submitMessage]:visible').prepend('<input type="hidden" name="submitMessage">');
+        $formLetter = $("[name=submitMessage]:visible").closest('form');
+        email = $('#email').val();
+        logLopdAccept(email, 'contact');
+        $formLetter.aceptarLOPD($('#deluxelopdContact'));
+    }
+}
+
+function acceptLopdCompatible() {
+    var nameOrig = $('#deluxelopdCompatible').attr('origname');
+    email = $('#email').val();
+    if(!email) {
+        email = $('#customer_email').val();
+    }
+    if(!email) {
+        email = $('[id^=pricealert_email-]:visible').val();
+    }
+    if(!email) {
+        email = $('[id^=productquery_email]:visible').val();
+    }
+    logLopdAccept(email, nameOrig);
+    $('[name="'+ nameOrig +'"]').click();
+    quitLopd();
+}
+
+function acceptLopdContactV15() {
+    var input = document.getElementById('submitMessage');
+    input.insertAdjacentHTML('afterend', '<input type="hidden" name="submitMessage">');
+    $formLetter = $("input[name=submitMessage]").find('form');
+    email = $('#email').val();
+    logLopdAccept(email, 'contact');
+    $('form.std').aceptarLOPD($("#deluxelopdContact"));
+}
+
+function acceptProductAlert() {
+    quitLopd();
+    $('#oos_customer_email_nolopd').attr('id','oos_customer_email');
+    email = $('#oos_customer_email').val();
+    logLopdAccept(email, 'product_alert');
+    addNotification();
+}
+
+function acceptAlert() {
+    logLopdAccept('', 'alert');
+    quitLopd();
+}
+
+function logLopdAccept(email, source) {
+    
+    $.ajax({
+        type: 'POST',
+        url: ajaxLopdUrl,
+        data: { email: email, source: source},
+        async:false
+    });
+}
+
+function acceptOrderOPC16() {
+  quitLopd();
+  //texto_boton = 'Save';
+  $('#submitAccountDeluxe').before("<button id='submitAccount' class='btn btn-default button button-medium' name='submitAccount' type='submit'><span>" + texto_boton + "<i class='icon-chevron-right right'></i></span></button>");
+  $('#submitAccountDeluxe').remove();
+  $('#submitAccount').click();
+  $('#submitAccount').before("<button id='submitAccountDeluxe' class='btn btn-default button button-medium' name='submitAccountDeluxe' type='submit' onclick='event.preventDefault(); $(this).mostrarLOPD(\"#deluxelopdOrderOPC\")'><span>" + texto_boton + "<i class='icon-chevron-right right'></i></span></button>");
+  $('#submitAccount').remove();
+}
+
+function addnewClickSuperCheckout() {
+    
+    $(document).on('click', "#supercheckout_confirm_order", function(){
+        var id = parseInt($("input.delivery_option_radio:checked").val());
+        if (typeof paczkawruchuOpts != 'undefined') {
+            if (id == paczkawruchuOpts.carrier && paczkawruchuOpts.selectedKiosk === false)
+            {
+                showRuchGeoPicker();
+                return;
+            }
+        }
+        placeOrder();
+    });
+     
+}
+
+function acceptOrderOnepagecheckout() {
+  quitLopd();
+  $("#deluxesupercheckout_confirm_order").prop('id','supercheckout_confirm_order');
+   addnewClickSuperCheckout();
+   $("#supercheckout_confirm_order").click();  
+}
+
+
+function quitLopd() {
+  $("#deluxelopdContact").fadeOut("slow");
+  $("#deluxelopdNewsletter").fadeOut("slow");
+  $("#deluxelopdAuthentication").fadeOut("slow");
+  $("#deluxelopdProductAlert").fadeOut("slow");
+  $("#deluxelopdOrderOPC").fadeOut("slow");
+  $("#deluxelopdRefunds").fadeOut("slow");
+  $("#deluxelopdOnepagecheckout").fadeOut("slow");
+  $("#deluxelopdAlert").parent().fadeOut("slow");
+  $('#deluxelopdCompatible').fadeOut("slow");
+  $('.captchaerror').hide();
+}
+
+$(document).on('click', '#deluxebtn_place_order', function() {
+    $('#customer_email').mostrarLOPD('#deluxelopdOnepagecheckout');
+});
+
+$(document).on('click', '#deluxesupercheckout_confirm_order', function() {
+    $('#email').mostrarLOPD('#deluxelopdOnepagecheckout');
+});
+
+//Al seleccionar subscripción al newsletter en un formulario de registro
+$(document).on('change', '#newsletter', function() {
+    if(inNewsletter){
+        if ($(this).is(':checked') || $('#optin').is(':checked')) {
+            $('#idxjslopd-check-regnewsletter-wrapper').show();
+        } else {
+            $('#idxjslopd-check-regnewsletter-wrapper').hide();
+        }
+    }
+});
+
+$(document).on('change', '#optin', function() {
+    if(inNewsletter){
+        if ($(this).is(':checked') || $('#newsletter').is(':checked')) {
+            $('#idxjslopd-check-regnewsletter-wrapper').show();
+        } else {
+            $('#idxjslopd-check-regnewsletter-wrapper').hide();
+        }
+    }
+});
+
+$(document).on('submit','#account-creation_form, #identity form', function(e) {
+    if(inNewsletter){
+        if ($('#optin').is(':checked') || $('#newsletter').is(':checked')) {
+            if($('#acceptLopdRegNewsletter').is(':checked')){
+                email = $('#email').val();
+                logLopdAccept(email, 'newsletter');
+            } else {
+                e.preventDefault();
+                alert(decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " "));
+            }
+        }
+    }
+});
+
+$(document).on('submit','#new_account_form', function(e) {
+    if(inNewsletter){
+        if ($('#optin').is(':checked') || $('#newsletter').is(':checked')) {
+            if($('#acceptLopdRegNewsletter').is(':checked')){
+                email = $('#email').val();
+                logLopdAccept(email, 'newsletter');
+            } else {
+                e.preventDefault();
+                alert(decodeURIComponent(privacyUrlerrorText).replace(/\+/g, " "));
+            }
+        }
+    }
+});
+
+function expressOriginalEventClickButton() {
+    if(typeof orderOpcUrl !== "undefined") {
+        $('#opc_new_account-overlay, #opc_delivery_methods-overlay, #opc_payment_methods-overlay').fadeIn('slow');
+
+        var callingFile = '';
+        var advApiParam = '';
+        var params = '';
+
+        if ($(this).attr('data-adv-api')) {
+          advApiParam = '&isAdvApi=1';
+        }
+
+        if (parseInt($('#opc_id_customer').val()) == 0) {
+          callingFile = authenticationUrl;
+          params = 'submitAccount=true&';
+        } else {
+          callingFile = orderOpcUrl;
+          params = 'method=editCustomer&';
+        }
+
+        $('#opc_account_form input:visible, #opc_account_form input[type=hidden]').each(function() {
+          if ($(this).is('input[type=checkbox]')) {
+            if ($(this).is(':checked'))
+              params += encodeURIComponent($(this).attr('name')) + '=1&';
+          } else if ($(this).is('input[type=radio]')) {
+            if ($(this).is(':checked'))
+              params += encodeURIComponent($(this).attr('name')) + '=' + encodeURIComponent($(this).val()) + '&';
+          } else
+            params += encodeURIComponent($(this).attr('name')) + '=' + encodeURIComponent($(this).val()) + '&';
+        });
+
+        $('#opc_account_form select:visible').each(function() {
+          params += encodeURIComponent($(this).attr('name')) + '=' + encodeURIComponent($(this).val()) + '&';
+        });
+        params += 'customer_lastname=' + encodeURIComponent($('#customer_lastname').val()) + '&';
+        params += 'customer_firstname=' + encodeURIComponent($('#customer_firstname').val()) + '&';
+        params += 'alias=' + encodeURIComponent($('#alias').val()) + '&';
+        params += 'other=' + encodeURIComponent($('#other').val()) + '&';
+        params += 'is_new_customer=' + encodeURIComponent($('#is_new_customer').val()) + '&';
+        // Clean the last &
+        params = params.substr(0, params.length - 1);
+
+        $.ajax({
+          type: 'POST',
+          headers: {
+            "cache-control": "no-cache"
+          },
+          url: callingFile + '?rand=' + new Date().getTime() + advApiParam,
+          async: false,
+          cache: false,
+          dataType: "json",
+          data: 'ajax=true&' + params + '&token=' + static_token,
+          success: function(jsonData) {
+            if (jsonData.hasError) {
+              var tmp = '';
+              var i = 0;
+              for (var error in jsonData.errors)
+              //IE6 bug fix
+                if (error !== 'indexOf') {
+                  i = i + 1;
+                  tmp += '<li>' + jsonData.errors[error] + '</li>';
+                }
+              tmp += '</ol>';
+              var errors = '<b>' + txtThereis + ' ' + i + ' ' + txtErrors + ':</b><ol>' + tmp;
+              $('#opc_account_errors').slideUp('fast', function() {
+                $(this).html(errors).slideDown('slow', function() {
+                  $.scrollTo('#opc_account_errors', 800);
+                });
+              });
+            } else {
+              $('#opc_account_errors').slideUp('slow', function() {
+                $(this).html('');
+              });
+            }
+
+            isGuest = parseInt($('#is_new_customer').val()) == 1 ? 0 : 1;
+            // update addresses id
+            if (jsonData.id_address_delivery !== undefined && jsonData.id_address_delivery > 0)
+              $('#opc_id_address_delivery').val(jsonData.id_address_delivery);
+            if (jsonData.id_address_invoice !== undefined && jsonData.id_address_invoice > 0)
+              $('#opc_id_address_invoice').val(jsonData.id_address_invoice);
+
+            if (jsonData.id_customer !== undefined && jsonData.id_customer !== 0 && jsonData.isSaved) {
+              // update token
+              static_token = jsonData.token;
+
+              // It's not a new customer
+              if ($('#opc_id_customer').val() !== '0')
+                if (!saveAddress('delivery'))
+                  return false;
+
+                // update id_customer
+              $('#opc_id_customer').val(jsonData.id_customer);
+
+              if ($('#invoice_address:checked').length !== 0) {
+                if (!saveAddress('invoice'))
+                  return false;
+              }
+
+              // update id_customer
+              $('#opc_id_customer').val(jsonData.id_customer);
+
+              // force to refresh carrier list
+              if (isGuest) {
+                isLogged = 1;
+                $('#opc_account_saved').fadeIn('slow');
+                $('#submitAccount').hide();
+                updateAddressSelection(advApiParam);
+              } else
+                updateNewAccountToAddressBlock(advApiParam);
+            }
+            $('#opc_new_account-overlay, #opc_delivery_methods-overlay, #opc_payment_methods-overlay').fadeIn('slow');
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (textStatus !== 'abort') {
+              error = "TECHNICAL ERROR: unable to save account \n\nDetails:\nError thrown: " + XMLHttpRequest + "\n" + 'Text status: ' + textStatus;
+              if (!!$.prototype.fancybox)
+                $.fancybox.open([{
+                  type: 'inline',
+                  autoScale: true,
+                  minHeight: 30,
+                  content: '<p class="fancybox-error">' + error + '</p>'
+                }], {
+                  padding: 0
+                });
+              else
+                alert(error);
+            }
+            $('#opc_new_account-overlay, #opc_delivery_methods-overlay, #opc_payment_methods-overlay').fadeIn('slow')
+          }
+        });
+    } else {
+        $('#new_account_form').submit();
+    }
+}

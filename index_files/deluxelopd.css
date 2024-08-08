@@ -1,0 +1,456 @@
+/**
+* 2007-2016 PrestaShop
+*
+* NOTICE OF LICENSE
+*
+* @author    Innovadeluxe SL
+* @copyright 2016 Innovadeluxe SL
+
+* @license   INNOVADELUXE
+*/
+
+/*
+/**** Activar compatibilidad con algunos temas
+#lopdParentCheck label {
+    width: 100% !important;
+}
+
+div#lopdParentCheck.checkbox {
+    width: 100% !important;
+    border: none !important;
+}
+
+input#SubmitCreateDeluxe {
+    float: right;
+    background: none !important;
+    color: black !important;
+    text-transform: uppercase !important;
+}
+
+#idxjslopd-check-regnewsletter-wrapper .checkbox {
+    width: 100% !important;
+    border: none !important;
+    margin-left: 12%;
+}
+//*****hasta aquí compatibuilidad temas
+*/
+
+#deluxelopdContact,
+#deluxelopdRefunds,
+#deluxelopdNewsletter,
+#deluxelopdOnepagecheckout,
+#deluxelopdAuthentication,
+#deluxelopdProductAlert,
+#deluxelopdOrderOPC,
+#deluxelopdCompatible {
+    position: fixed;
+    top:0;
+    z-index:999999;
+}
+
+#deluxelopdAlert{
+    top: 0;
+
+}
+
+@media(min-width:1501px){
+
+
+    .flex-container {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .flex-item {
+        padding: 5px;
+        width: 66vw;
+        height: auto;
+        margin: 10px;
+        line-height: 20px;
+        color: white;	    font-size: 2em;
+        text-align: center;
+    }
+}
+@media(min-width:1301px) and (max-width:1500px){
+
+
+    .flex-container {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .flex-item {
+        padding: 5px;
+        width: 82vw;
+        height: auto;
+        margin: 10px;
+        line-height: 20px;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+    }
+}
+
+@media(min-width:1025px) and (max-width:1300px){
+
+    .flex-container {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .flex-item {
+        padding: 5px;
+        width: 92vw;
+        height: auto;
+        margin: 10px;
+        line-height: 20px;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+    }
+}
+@media(min-width:768px) and (max-width:1024px){
+
+    .flex-container {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .flex-item {
+
+        padding: 5px;
+        width: 93vw;
+        height: auto;
+        margin: 10px;
+        line-height: 20px;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+    }
+}
+@media(max-width:767px){
+
+    .flex-container {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .flex-item {
+
+        padding: 5px;
+        width: 94vw;
+        height: auto;
+        margin: 10px;
+        line-height: 20px;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+    }
+}
+
+
+#buttons{
+    font-size:12px;
+}
+
+
+#deluxesupercheckout_confirm_order {
+    cursor: pointer;
+}
+
+
+.content-lopd-tit{
+    font-size:14px;
+    font-weight: bold;
+    color:#ffffff;
+}
+
+
+
+/* botones */
+
+
+@media(min-width:481px){
+    #deluxelopdOK{
+        background-color: #afafaf;
+        border-radius:2px;
+        color: #ffffff !important;
+        margin-left: 5px;
+        padding: 10px 7px;
+        cursor:pointer;
+    }
+
+
+
+    #Nolopd {
+        background-color: #afafaf;
+        border-radius:2px;
+        color: #ffffff !important;
+        margin-left: 5px;
+        padding: 10px 7px;
+        cursor:pointer;
+    }
+
+}
+
+@media(max-width:480px){
+    #buttons a {
+        display: block;
+    }
+    #deluxelopdOK{
+        background-color: #afafaf;
+        border-radius:2px;
+        color: #ffffff !important;
+        margin-left: 5px;
+        padding: 10px 44px;
+    }
+
+
+
+    #Nolopd {
+        background-color: #afafaf;
+        border-radius:2px;
+        color: #ffffff !important;
+        margin-left: 5px;
+        padding: 10px 40px;
+    }
+
+}
+
+
+
+
+#deluxelopdOK:hover{
+    background-color: green;
+}
+#Nolopd:hover {
+    background-color: orange;
+}
+
+.lopd-link a{
+    font-size:12px;
+    color:#ffffff;
+    border-bottom: 2px dotted rgba(255,255,255,.5);
+}
+
+#lopd {
+    color: #ffffff !important;
+    margin-left: 5px;
+    padding: 3px 5px;
+    cursor:pointer;
+    text-decoration: none;
+}
+
+#lopd:hover {
+    text-decoration: underline;
+}
+/* */
+
+.delete-myaccount img{
+    margin-left: 4%;
+    padding-right: 7%;
+}
+
+.captchaerror {
+    display:none;
+}
+
+a.idxjs-aprivacy {
+    text-decoration: underline;
+}
+
+a.idxjs-aprivacy-newsletter {
+    text-decoration: underline;
+    color: white !important;
+}
+
+.lopd-check-error, .lopd-check-error-newsletter, .lopd-check-error-express, .lopd-check-error-compatible {
+    color: red;
+}
+ /*compatibilidad con chat helpdesk, alerta precios bestkit y alertas de stock bestkit*/
+.lopd-check-error-compatible.isCompatible-pricewatch-start-button,
+.lopd-check-error-compatible.isCompatible-lz_chat_overlay_data_form_ok_button,
+.lopd-check-error-compatible.isCompatible-submit_subscribe {
+    font-size: 10px !important;
+    color: red !important;
+}
+
+.idxjslopd-check-newsletter {
+    width: auto;
+    z-index: 999;
+    margin-top: 20px;
+}
+
+#lopd_table{
+    border:1px solid #bababa;
+}
+
+#lopd_table .lopd_row{
+
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    grid-template-rows:1fr;
+
+}
+
+.lopd_row div {
+    border: 1px solid #f7f7f7;
+    text-align: center;
+    padding: 10px;
+}
+
+@media (min-width:481px){
+    .min-text-newsletter,
+    .min-text-register,
+    .min-text-contact,
+    .min-text-product,
+    .min-text-alert,
+    .min-text-compatible {
+        font-size:12px;
+        text-align: justify;
+        line-height: 14px;
+    }
+
+    .min-text-regnewsletter{
+        font-size:12px;
+        text-align: justify;
+        line-height: 14px;
+        margin-bottom: 10px;
+    }
+
+}
+
+
+
+@media (max-width:480px){
+     #buttons a {
+        display: block;
+    }
+    .min-text-newsletter,
+    .min-text-register,
+    .min-text-contact,
+    .min-text-product,
+    .min-text-alert,
+    .min-text-compatible {
+        font-size:12px;
+        text-align: justify;
+        line-height: 14px;
+    }
+
+    .min-text-regnewsletter{
+        font-size:12px;
+        text-align: justify;
+        line-height: 14px;
+        margin-bottom: 10px;
+    }
+
+}
+
+
+#module-deluxerefunds-refunds #lopdParentCheck{
+    margin-top: 60px;
+}
+
+.reg-red {
+    color: #ff0000;
+    font-weight: bold;
+    margin: 0px 5px; 
+}
+
+.cancel-text{
+    font-size: 12px;
+}
+
+
+.personal-info,
+.personal-request,
+.personal-delete{
+    margin:15px 0px;
+}
+
+.personal-request p,
+.personal-delete p{
+    font-size: 14px;
+}
+
+
+.personal-info .page-heading ,
+.personal-request .page-heading ,
+.personal-delete .page-heading {
+
+    padding: 10px;
+
+    background: #2cb5e8;
+    color: #ffffff !important;
+    padding-bottom: 10px !important;
+    margin: 30px 0px 10px 0px !important;
+    border-radius: 5px;
+    border-bottom: 0px !important
+
+}
+
+.request-content,
+.delete-content{
+    border-radius: 5px;
+    border:1px solid #cacaca;
+    padding:20px;
+}
+.lopd_header {
+    background: #dbecf2;
+    color: #353230;
+}
+
+.blockedContent{
+    height: 100%;
+    width: 100%;
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+}
+
+/*Compatibilidad supercheckout*/
+#module-supercheckout-supercheckout #lopdParentCheckCompatible {
+    width: 250px;
+}
